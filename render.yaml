@@ -1,0 +1,30 @@
+services:
+  # Backend - Flask API
+  - type: web
+    name: dayflow-backend
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRY_HOURS
+        value: "24"
+
+  # Frontend - Vite/React static site
+  - type: web
+    name: dayflow-frontend
+    runtime: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: APP_URL
+        sync: false
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
