@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Dayflow HRMS</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+        
+        <!-- Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+          <div>
+            <h1 class="page-title">HR Administration Dashboard</h1>
+            <p class="page-desc mb-0">Overview of workforce headcounts, daily attendance, pending leaves, and payroll.</p>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <a href="/pages/admin/leave-approvals.html" class="btn-top-action btn-top-glass position-relative">
+              <i class="bi bi-clock-history"></i>
+              <span>Review Requests</span>
+              <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+            </a>
+            <a href="/pages/admin/employees.html" class="btn-top-action btn-top-gradient">
+              <i class="bi bi-people-fill"></i>
+              <span>Manage Employees</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Statistics Cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Total Workforce</span>
+              <span class="stat-value" id="adm-total-emp">6</span>
+              <span class="stat-trend positive">
+                <i class="bi bi-check-circle-fill"></i> 100% Active
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-purple">
+              <i class="bi bi-people-fill"></i>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Present Today</span>
+              <span class="stat-value text-success" id="adm-present-today">4 <span class="stat-unit">/ 6</span></span>
+              <span class="stat-trend positive">
+                <i class="bi bi-check2"></i> 80% Turnout
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-green">
+              <i class="bi bi-person-check-fill"></i>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Pending Leaves</span>
+              <span class="stat-value text-warning" id="adm-pending-leaves">1</span>
+              <span class="stat-trend neutral" style="color: #FBBF24; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.25);">
+                <i class="bi bi-hourglass-split"></i> Requires Action
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-amber">
+              <i class="bi bi-calendar2-heart-fill"></i>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Monthly Payroll</span>
+              <span class="stat-value" id="adm-total-payroll">₹4,66,000</span>
+              <span class="stat-trend positive">
+                <i class="bi bi-arrow-up-short"></i> Disbursed on 1st
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-pink">
+              <i class="bi bi-cash-coin"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick HR Actions Section -->
+        <div class="admin-quick-actions-section">
+          <div class="quick-actions-title">
+            <i class="bi bi-lightning-charge-fill text-warning"></i>
+            <span>Quick Actions</span>
+          </div>
+          <div class="admin-quick-actions-grid">
+            <!-- 1. Add Employee -->
+            <a href="/pages/admin/employees.html" class="quick-action-card">
+              <div class="quick-action-card-top">
+                <div class="quick-action-icon-box icon-box-blue">
+                  <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <i class="bi bi-arrow-right quick-action-arrow"></i>
+              </div>
+              <div>
+                <div class="quick-action-title">Add Employee</div>
+                <div class="quick-action-desc">Onboard a new team member</div>
+              </div>
+            </a>
+
+            <!-- 2. Leave Approvals -->
+            <a href="/pages/admin/leave-approvals.html" class="quick-action-card">
+              <div class="quick-action-card-top">
+                <div class="quick-action-icon-box icon-box-orange">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <i class="bi bi-arrow-right quick-action-arrow"></i>
+              </div>
+              <div>
+                <div class="quick-action-title">Leave Approvals</div>
+                <div class="quick-action-desc">Review pending leave requests</div>
+              </div>
+            </a>
+
+            <!-- 3. Attendance Logs -->
+            <a href="/pages/admin/attendance.html" class="quick-action-card">
+              <div class="quick-action-card-top">
+                <div class="quick-action-icon-box icon-box-green">
+                  <i class="bi bi-calendar-check-fill"></i>
+                </div>
+                <i class="bi bi-arrow-right quick-action-arrow"></i>
+              </div>
+              <div>
+                <div class="quick-action-title">Attendance Logs</div>
+                <div class="quick-action-desc">View real-time punch logs</div>
+              </div>
+            </a>
+
+            <!-- 4. Payroll Overview -->
+            <a href="/pages/admin/payroll.html" class="quick-action-card">
+              <div class="quick-action-card-top">
+                <div class="quick-action-icon-box icon-box-pink">
+                  <i class="bi bi-credit-card-2-front-fill"></i>
+                </div>
+                <i class="bi bi-arrow-right quick-action-arrow"></i>
+              </div>
+              <div>
+                <div class="quick-action-title">Payroll Overview</div>
+                <div class="quick-action-desc">Review salary disbursements</div>
+              </div>
+            </a>
+
+            <!-- 5. Analytics & Reports -->
+            <a href="/pages/admin/reports.html" class="quick-action-card">
+              <div class="quick-action-card-top">
+                <div class="quick-action-icon-box icon-box-purple">
+                  <i class="bi bi-bar-chart-line-fill"></i>
+                </div>
+                <i class="bi bi-arrow-right quick-action-arrow"></i>
+              </div>
+              <div>
+                <div class="quick-action-title">Analytics & Reports</div>
+                <div class="quick-action-desc">System reports and insights</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Row 2: Analytics Charts -->
+        <div class="row g-4 mb-4">
+          
+          <!-- Attendance Turnout Chart -->
+          <div class="col-lg-5 col-xl-4">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">Today's Attendance Split</h3>
+                <a href="/pages/admin/attendance.html" class="link-details-df">View Logs <i class="bi bi-arrow-right"></i></a>
+              </div>
+              <div class="df-card-body d-flex flex-column justify-content-center p-3">
+                <div style="height: 230px; position: relative;">
+                  <canvas id="adminAttendanceChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leave Status Trends -->
+          <div class="col-lg-7 col-xl-8">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">Monthly Leave Application Trends</h3>
+                <span class="badge-tag-df">Current Cycle</span>
+              </div>
+              <div class="df-card-body p-3">
+                <div style="height: 230px; position: relative;">
+                  <canvas id="adminLeaveTrendChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 3: Pending Approvals Widget + Recent Activity Feed -->
+        <div class="row g-4">
+          
+          <!-- Pending Approvals Widget -->
+          <div class="col-lg-6">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">
+                  <i class="bi bi-hourglass-split text-warning me-2"></i>Leaves Awaiting Approval
+                </h3>
+                <a href="/pages/admin/leave-approvals.html" class="link-details-df">All Requests <i class="bi bi-arrow-right"></i></a>
+              </div>
+              <div class="df-card-body p-3">
+                <div id="admin-pending-leaves-preview" class="d-flex flex-column gap-2">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Organization Activities -->
+          <div class="col-lg-6">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">
+                  <i class="bi bi-activity text-primary me-2"></i>Recent HR Activities
+                </h3>
+                <span class="badge-tag-df">System logs</span>
+              </div>
+              <div class="df-card-body p-0">
+                <ul class="activity-timeline-list" id="admin-activity-timeline">
+                  <!-- Populated by dashboard.js -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      DayflowAuth.requireAuth(['hr']);
+      DayflowAuth.renderGlobalLayout('adm-dashboard');
+      DayflowDashboard.initAdminDashboard();
+      
+      // Load pending leaves preview
+      (async () => {
+        const leaves = await DayflowAPI.getLeaves({ status: 'Pending' });
+        const container = document.getElementById('admin-pending-leaves-preview');
+        if (!container) return;
+
+        if (leaves.length === 0) {
+          container.innerHTML = '<div class="text-center text-muted py-4 small">No pending leave applications.</div>';
+          return;
+        }
+
+        let html = '';
+        leaves.slice(0, 3).forEach(l => {
+          const initials = l.employeeName ? l.employeeName.split(' ').map(n => n[0]).join('').substring(0, 2) : 'EM';
+          html += `
+            <div class="d-flex justify-content-between align-items-center p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.2s ease;">
+              <div class="d-flex align-items-center gap-3">
+                <div class="avatar-circle" style="width: 38px; height: 38px; font-size: 0.825rem; background: linear-gradient(135deg, #8B5CF6, #3B82F6); font-weight: 700;">${initials}</div>
+                <div>
+                  <strong class="d-block text-light small mb-0 fw-bold">${l.employeeName}</strong>
+                  <div class="text-muted smaller">${l.leaveType} (${l.duration}) • <span class="text-secondary">${l.startDate}</span></div>
+                </div>
+              </div>
+              <a href="/pages/admin/leave-approvals.html" class="btn btn-outline-df btn-sm py-1 px-3" style="font-size: 0.775rem;">Review</a>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      })();
+    });
+  </script>
+</body>
+</html>

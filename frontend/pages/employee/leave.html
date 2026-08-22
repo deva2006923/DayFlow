@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave Management — Dayflow HRMS</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/employee.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h1 class="page-title">Leave Management</h1>
+            <p class="page-desc mb-0">Apply for time off, check leave balances, and track approvals.</p>
+          </div>
+        </div>
+
+        <!-- Leave Balance 3-Card Grid -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="leave-balance-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="leave-balance-type">Paid Annual Leave</span>
+                <span class="badge bg-primary-subtle text-primary fw-bold">12 Days Remaining</span>
+              </div>
+              <div class="leave-balance-count">12 <span class="fs-6 text-muted fw-normal">/ 18 Available</span></div>
+              <div class="leave-progress-bar">
+                <div class="leave-progress-fill" style="width: 66%; background: var(--primary);"></div>
+              </div>
+              <div class="d-flex justify-content-between smaller text-muted mt-2">
+                <span>Used: 6 Days</span>
+                <span>Annual Entitlement</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="leave-balance-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="leave-balance-type">Sick / Casual Leave</span>
+                <span class="badge bg-info-subtle text-info fw-bold">6 Days Remaining</span>
+              </div>
+              <div class="leave-balance-count">6 <span class="fs-6 text-muted fw-normal">/ 8 Available</span></div>
+              <div class="leave-progress-bar">
+                <div class="leave-progress-fill" style="width: 75%; background: var(--info);"></div>
+              </div>
+              <div class="d-flex justify-content-between smaller text-muted mt-2">
+                <span>Used: 2 Days</span>
+                <span>Requires Medical Slip > 2d</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="leave-balance-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="leave-balance-type">Unpaid / Sabbatical</span>
+                <span class="badge bg-light text-dark fw-bold border">Unlimited</span>
+              </div>
+              <div class="leave-balance-count">0 <span class="fs-6 text-muted fw-normal">Days Utilized</span></div>
+              <div class="leave-progress-bar">
+                <div class="leave-progress-fill" style="width: 0%; background: var(--warning);"></div>
+              </div>
+              <div class="d-flex justify-content-between smaller text-muted mt-2">
+                <span>Requires HR Director approval</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Apply For Leave Form + My Leave Requests Table -->
+        <div class="row g-4">
+          
+          <!-- Apply Form -->
+          <div class="col-lg-5">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="h3 mb-0"><i class="bi bi-calendar-plus text-primary me-2"></i>Apply for Leave</h3>
+              </div>
+              <div class="df-card-body">
+                
+                <form id="applyLeaveForm" onsubmit="DayflowLeave.handleApplyLeave(event)">
+                  <div class="mb-3">
+                    <label for="leave-type" class="form-label-df">Leave Type <span class="text-danger">*</span></label>
+                    <select class="form-select-df" id="leave-type" required>
+                      <option value="" disabled selected>Select Leave Category...</option>
+                      <option value="Paid Leave">Paid Annual Leave</option>
+                      <option value="Sick Leave">Sick / Medical Leave</option>
+                      <option value="Casual Leave">Casual Leave</option>
+                      <option value="Unpaid Leave">Unpaid Leave (Loss of Pay)</option>
+                    </select>
+                  </div>
+
+                  <div class="row g-2 mb-3">
+                    <div class="col-sm-6">
+                      <label for="leave-start-date" class="form-label-df">Start Date <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control-df" id="leave-start-date" required>
+                    </div>
+                    <div class="col-sm-6">
+                      <label for="leave-end-date" class="form-label-df">End Date <span class="text-danger">*</span></label>
+                      <input type="date" class="form-control-df" id="leave-end-date" required>
+                    </div>
+                  </div>
+
+                  <div class="p-2 px-3 bg-light border rounded mb-3 d-flex justify-content-between align-items-center">
+                    <span class="small text-muted">Calculated Duration:</span>
+                    <span class="fw-bold text-primary" id="leave-calculated-duration">-</span>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="leave-reason" class="form-label-df">Reason for Leave <span class="text-danger">*</span></label>
+                    <textarea class="form-control-df" id="leave-reason" rows="3" placeholder="Please specify the reason for your time off request..." required></textarea>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary-df w-100 py-2" id="btn-submit-leave">
+                    <i class="bi bi-send-fill me-1"></i> Submit Request
+                  </button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- My Leave Requests History -->
+          <div class="col-lg-7">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="h3 mb-0"><i class="bi bi-clock-history text-primary me-2"></i>My Leave Requests</h3>
+              </div>
+              <div class="df-card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-df mb-0">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Days</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="leave-requests-tbody">
+                      <!-- Populated dynamically by leave.js -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/leave.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      DayflowAuth.requireAuth(['employee', 'hr']);
+      DayflowAuth.renderGlobalLayout('emp-leave');
+      DayflowLeave.init();
+    });
+  </script>
+</body>
+</html>

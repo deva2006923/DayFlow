@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Dashboard — Dayflow HRMS</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/employee.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <!-- Shared Sidebar Container -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main Content Area -->
+    <div class="app-main">
+      <!-- Shared Topbar Container -->
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+        
+        <!-- Dashboard Greeting Header & Quick Actions -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+          <div>
+            <h1 class="page-title">Good morning, <span id="dash-emp-name">Hemnath</span> 👋</h1>
+            <p class="page-desc mb-0">Here's what's happening with your workday alignment today.</p>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <a href="/pages/employee/leave.html" class="btn-top-action btn-top-glass">
+              <i class="bi bi-calendar-plus"></i>
+              <span>Apply Leave</span>
+            </a>
+            <a href="/pages/employee/payroll.html" class="btn-top-action btn-top-gradient">
+              <i class="bi bi-file-earmark-text"></i>
+              <span>View Salary Slip</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 KPI Statistics Cards (Matching Reference Visuals) -->
+        <div class="stats-grid">
+          
+          <!-- 1. Today's Status -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Today's Status</span>
+              <span class="stat-value text-success" id="stat-attendance-val">Present</span>
+              <span class="stat-trend positive">
+                <i class="bi bi-clock"></i> In at 09:02 AM
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-green">
+              <i class="bi bi-person-fill"></i>
+            </div>
+          </div>
+
+          <!-- 2. Leave Balance -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Leave Balance</span>
+              <span class="stat-value" id="stat-leave-val">18 <span class="stat-unit">Days</span></span>
+              <span class="stat-subtext">12 Paid • 6 Sick</span>
+            </div>
+            <div class="stat-icon-circle stat-icon-purple">
+              <i class="bi bi-calendar-heart-fill"></i>
+            </div>
+          </div>
+
+          <!-- 3. Working Days -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Working Days</span>
+              <span class="stat-value">22 <span class="stat-unit">Days</span></span>
+              <span class="stat-trend positive">
+                <i class="bi bi-check-lg"></i> 18 Days Completed
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-amber">
+              <i class="bi bi-briefcase-fill"></i>
+            </div>
+          </div>
+
+          <!-- 4. Hours Logged -->
+          <div class="stat-card">
+            <div class="stat-info">
+              <span class="stat-label">Hours Logged</span>
+              <span class="stat-value">44.3 <span class="stat-unit">Hrs</span></span>
+              <span class="stat-trend positive-text">
+                <i class="bi bi-arrow-up-short"></i> On track (Avg 8.8h)
+              </span>
+            </div>
+            <div class="stat-icon-circle stat-icon-blue">
+              <i class="bi bi-clock-fill"></i>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 2: Live Shift Timeline Widget + Weekly Attendance Bar Chart -->
+        <div class="row g-4 mb-4">
+          
+          <!-- Left: Shift Punch Timeline Widget -->
+          <div class="col-lg-5 col-xl-4">
+            <div class="shift-timeline-card h-100">
+              
+              <!-- Timeline Node 1: Running Clock & Date -->
+              <div class="timeline-step">
+                <div class="step-bullet bullet-purple">
+                  <i class="bi bi-clock"></i>
+                </div>
+                <div class="step-content">
+                  <div class="step-time" id="live-time">12:22:11 PM</div>
+                  <div class="step-sub" id="live-date">Saturday, Aug 22, 2026</div>
+                  <div class="step-status text-primary" id="punch-status-text">
+                    <i class="bi bi-check-circle-fill"></i> Day Completed
+                  </div>
+                </div>
+              </div>
+
+              <!-- Connecting Line -->
+              <div class="timeline-line"></div>
+
+              <!-- Timeline Node 2: Check In -->
+              <div class="timeline-step">
+                <div class="step-bullet bullet-green">
+                  <i class="bi bi-arrow-down"></i>
+                </div>
+                <div class="step-content">
+                  <div class="step-time" id="punch-in-time">11:15 AM</div>
+                  <div class="step-sub">Check In Time</div>
+                </div>
+              </div>
+
+              <!-- Connecting Line -->
+              <div class="timeline-line"></div>
+
+              <!-- Timeline Node 3: Check Out -->
+              <div class="timeline-step">
+                <div class="step-bullet bullet-orange">
+                  <i class="bi bi-arrow-up"></i>
+                </div>
+                <div class="step-content">
+                  <div class="step-time" id="punch-out-time">12:20 PM</div>
+                  <div class="step-sub">Check Out Time</div>
+                </div>
+              </div>
+
+              <!-- Punch Action Buttons -->
+              <div class="timeline-actions-row">
+                <button type="button" class="btn-timeline-action" id="btn-punch-in" onclick="DayflowDashboard.handleCheckIn()">
+                  <i class="bi bi-box-arrow-in-right"></i> Check In
+                </button>
+                <button type="button" class="btn-timeline-action" id="btn-punch-out" onclick="DayflowDashboard.handleCheckOut()">
+                  <i class="bi bi-box-arrow-right"></i> Check Out
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Right: Weekly Attendance & Hours Chart -->
+          <div class="col-lg-7 col-xl-8">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">Weekly Attendance & Hours</h3>
+                <span class="badge-tag-df">This Week (44.3 Hrs Total)</span>
+              </div>
+              <div class="df-card-body pt-3">
+                <div style="height: 240px; position: relative;">
+                  <canvas id="weeklyAttendanceChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Row 3: Leave Balance Summary Doughnut + Recent Activity Timeline -->
+        <div class="row g-4">
+          
+          <!-- Left: Leave Balance Summary -->
+          <div class="col-lg-5 col-xl-4">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">Leave Balance Summary</h3>
+                <a href="/pages/employee/leave.html" class="link-details-df">Details <i class="bi bi-arrow-right"></i></a>
+              </div>
+              <div class="df-card-body d-flex align-items-center justify-content-between flex-wrap gap-3 py-3">
+                <!-- Doughnut Canvas -->
+                <div style="width: 140px; height: 140px; position: relative; flex-shrink: 0;">
+                  <canvas id="leaveSummaryChart"></canvas>
+                </div>
+                <!-- Custom Matching Legend -->
+                <div class="leave-custom-legend flex-1">
+                  <div class="legend-item-df">
+                    <span class="legend-box box-purple"></span>
+                    <span class="legend-label">Casual / Paid (12)</span>
+                  </div>
+                  <div class="legend-item-df">
+                    <span class="legend-box box-orange"></span>
+                    <span class="legend-label">Sick Leave (6)</span>
+                  </div>
+                  <div class="legend-item-df">
+                    <span class="legend-box box-pink"></span>
+                    <span class="legend-label">Used / Other (4)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Recent Activity Timeline -->
+          <div class="col-lg-7 col-xl-8">
+            <div class="df-card h-100">
+              <div class="df-card-header">
+                <h3 class="card-title-df mb-0">Recent Activity Timeline</h3>
+                <span class="text-muted small">Live updates</span>
+              </div>
+              <div class="df-card-body p-0">
+                <ul class="activity-timeline-list" id="activity-timeline-list">
+                  <!-- Rendered dynamically by dashboard.js -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Require employee or hr auth
+      const user = DayflowAuth.requireAuth(['employee', 'hr']);
+      if (!user) return;
+
+      // Render shared layout
+      DayflowAuth.renderGlobalLayout('emp-dashboard');
+      
+      const nameEl = document.getElementById('dash-emp-name');
+      if (nameEl && user.name) {
+        nameEl.textContent = user.name.split(' ')[0];
+      }
+
+      // Initialize Employee Dashboard
+      DayflowDashboard.initEmployeeDashboard();
+    });
+  </script>
+</body>
+</html>

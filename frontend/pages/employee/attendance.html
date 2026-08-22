@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Attendance — Dayflow HRMS</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/employee.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+        
+        <!-- Page Header -->
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+          <div>
+            <h1 class="page-title">Attendance Tracking</h1>
+            <p class="page-desc mb-0">Review daily check-in times, worked hours, and status history.</p>
+          </div>
+          <div class="d-flex gap-2 align-items-center">
+            <button type="button" class="btn-top-action btn-top-glass" onclick="DayflowAttendance.exportReport()">
+              <i class="bi bi-download"></i> <span>Export Attendance</span>
+            </button>
+            <a href="/pages/employee/dashboard.html" class="btn-top-action btn-top-gradient">
+              <i class="bi bi-clock-history"></i> <span>Punch Widget</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="attendance-kpi-grid mb-4">
+          <div class="attendance-kpi-card">
+            <div class="attendance-kpi-label">Present Days</div>
+            <div class="attendance-kpi-value text-present" id="count-present">4</div>
+            <div class="attendance-kpi-sub">This Month</div>
+          </div>
+          <div class="attendance-kpi-card">
+            <div class="attendance-kpi-label">Absent Days</div>
+            <div class="attendance-kpi-value text-absent" id="count-absent">0</div>
+            <div class="attendance-kpi-sub">Unexcused</div>
+          </div>
+          <div class="attendance-kpi-card">
+            <div class="attendance-kpi-label">Half Days</div>
+            <div class="attendance-kpi-value text-halfday" id="count-halfday">1</div>
+            <div class="attendance-kpi-sub">4.5 Hrs Logged</div>
+          </div>
+          <div class="attendance-kpi-card">
+            <div class="attendance-kpi-label">Leaves Taken</div>
+            <div class="attendance-kpi-value text-leave" id="count-leave">0</div>
+            <div class="attendance-kpi-sub">Approved Leaves</div>
+          </div>
+        </div>
+
+        <!-- Main 2-Column Section: Monthly Calendar + Punch Records -->
+        <div class="attendance-layout-grid">
+          
+          <!-- Monthly Calendar Card -->
+          <div class="attendance-card">
+            <div class="attendance-card-header">
+              <h3 class="attendance-card-title">August 2026 Calendar</h3>
+              <span class="badge-month-view">Month View</span>
+            </div>
+            
+            <div class="attendance-calendar" id="attendance-calendar-grid">
+              <!-- Populated by attendance.js -->
+            </div>
+
+            <div class="calendar-legend">
+              <div class="legend-item"><span class="legend-dot present"></span> Present</div>
+              <div class="legend-item"><span class="legend-dot halfday"></span> Half Day</div>
+              <div class="legend-item"><span class="legend-dot leave"></span> Leave</div>
+              <div class="legend-item"><span class="legend-dot absent"></span> Absent</div>
+            </div>
+          </div>
+
+          <!-- Daily Punch Records Card -->
+          <div class="attendance-card">
+            <div class="attendance-card-header">
+              <h3 class="attendance-card-title">Daily Punch Records</h3>
+            </div>
+            
+            <!-- Table Search & Filter Toolbar -->
+            <div class="punch-filter-row">
+              <div class="search-box-df">
+                <i class="bi bi-search search-icon"></i>
+                <input type="text" class="form-control-df" id="att-search" placeholder="Search date or day..." oninput="DayflowAttendance.renderAttendanceTable()">
+              </div>
+              <div>
+                <select class="form-select-df" id="att-status-filter" onchange="DayflowAttendance.renderAttendanceTable()">
+                  <option value="All" selected>All Statuses</option>
+                  <option value="Present">Present</option>
+                  <option value="Absent">Absent</option>
+                  <option value="Half Day">Half Day</option>
+                  <option value="Leave">Leave</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-responsive flex-grow-1">
+              <table class="table-punch-records">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Day</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
+                    <th>Hours</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="attendance-table-body">
+                  <!-- Populated dynamically by attendance.js -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/attendance.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      DayflowAuth.requireAuth(['employee', 'hr']);
+      DayflowAuth.renderGlobalLayout('emp-attendance');
+      DayflowAttendance.init(false);
+    });
+  </script>
+</body>
+</html>

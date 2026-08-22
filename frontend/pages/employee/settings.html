@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings & Preferences — Dayflow HRMS</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/employee.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <div id="sidebar-container"></div>
+
+    <div class="app-main">
+      <div id="topbar-container"></div>
+
+      <main class="content-body">
+        
+        <!-- Header -->
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+          <div>
+            <h1 class="page-title">Account Settings & Preferences</h1>
+            <p class="page-desc mb-0">Manage notification channels, display preferences, and account security credentials.</p>
+          </div>
+          <div class="d-flex gap-2 align-items-center">
+            <a href="/pages/employee/profile.html" class="btn-top-action btn-top-glass">
+              <i class="bi bi-person"></i> <span>View Profile</span>
+            </a>
+            <button type="button" class="btn-top-action btn-top-gradient" id="btn-save-emp-settings" onclick="DayflowSettings.saveEmployeeSettings(event)">
+              <i class="bi bi-check2-circle"></i> <span>Save Preferences</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          
+          <!-- Column 1: Notifications & Display Preferences -->
+          <div class="col-lg-6">
+            
+            <!-- Notification Preferences -->
+            <div class="attendance-card mb-4">
+              <div class="attendance-card-header">
+                <h3 class="attendance-card-title"><i class="bi bi-bell text-warning me-2"></i>Notification Channels</h3>
+                <span class="badge-month-view">Email & Push</span>
+              </div>
+              <div class="d-flex flex-column gap-3">
+                <div class="form-check form-switch p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+                  <input class="form-check-input" type="checkbox" id="emp-notif-punch" checked>
+                  <label class="form-check-label fw-semibold text-white ms-2" for="emp-notif-punch">
+                    Daily Punch-In / Punch-Out Reminder
+                    <div class="smaller text-muted fw-normal">Get notified 15 minutes before shift start & end.</div>
+                  </label>
+                </div>
+
+                <div class="form-check form-switch p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+                  <input class="form-check-input" type="checkbox" id="emp-notif-leave" checked>
+                  <label class="form-check-label fw-semibold text-white ms-2" for="emp-notif-leave">
+                    Leave Request Status Updates
+                    <div class="smaller text-muted fw-normal">Instant alert when HR reviews or approves your leave.</div>
+                  </label>
+                </div>
+
+                <div class="form-check form-switch p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+                  <input class="form-check-input" type="checkbox" id="emp-notif-salary" checked>
+                  <label class="form-check-label fw-semibold text-white ms-2" for="emp-notif-salary">
+                    Monthly Salary Slip Available
+                    <div class="smaller text-muted fw-normal">Receive an email notice when new pay slip is published.</div>
+                  </label>
+                </div>
+
+                <div class="form-check form-switch p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+                  <input class="form-check-input" type="checkbox" id="emp-notif-announcement" checked>
+                  <label class="form-check-label fw-semibold text-white ms-2" for="emp-notif-announcement">
+                    Company Announcements & Holidays
+                    <div class="smaller text-muted fw-normal">Stay up to date with company-wide notices and townhalls.</div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Display & Accessibility -->
+            <div class="attendance-card">
+              <div class="attendance-card-header">
+                <h3 class="attendance-card-title"><i class="bi bi-display text-primary me-2"></i>Display & System Preferences</h3>
+              </div>
+              <div class="row g-3">
+                <div class="col-sm-6">
+                  <label class="form-label text-secondary small fw-semibold">Time Format</label>
+                  <select class="form-select-df" id="emp-pref-timeformat">
+                    <option value="12h" selected>12-Hour (09:00 AM)</option>
+                    <option value="24h">24-Hour (09:00)</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label text-secondary small fw-semibold">Date Format</label>
+                  <select class="form-select-df" id="emp-pref-dateformat">
+                    <option value="YYYY-MM-DD" selected>YYYY-MM-DD (2026-08-22)</option>
+                    <option value="DD/MM/YYYY">DD/MM/YYYY (22/08/2026)</option>
+                    <option value="MMM DD, YYYY">MMM DD, YYYY (Aug 22, 2026)</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label text-secondary small fw-semibold">Default Landing Page</label>
+                  <select class="form-select-df" id="emp-pref-landing">
+                    <option value="/pages/employee/dashboard.html" selected>Employee Dashboard</option>
+                    <option value="/pages/employee/attendance.html">Attendance Tracking</option>
+                    <option value="/pages/employee/leave.html">Leave Center</option>
+                    <option value="/pages/employee/payroll.html">Payroll & Salary</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <div class="form-check form-switch p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+                    <input class="form-check-input" type="checkbox" id="emp-pref-sound" checked>
+                    <label class="form-check-label fw-semibold text-white ms-2" for="emp-pref-sound">
+                      Audio Chimes on Punch Check-In/Out
+                      <div class="smaller text-muted fw-normal">Plays confirmation sound when logging work shifts.</div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Column 2: Account Security & Active Sessions -->
+          <div class="col-lg-6">
+            
+            <!-- Security & Password -->
+            <div class="attendance-card mb-4">
+              <div class="attendance-card-header">
+                <h3 class="attendance-card-title"><i class="bi bi-shield-lock text-danger me-2"></i>Change Password</h3>
+                <span class="badge-month-view">Security</span>
+              </div>
+              <form onsubmit="DayflowSettings.changePassword(event)">
+                <div class="mb-3">
+                  <label class="form-label text-secondary small fw-semibold">Current Password</label>
+                  <input type="password" class="form-control-df" id="pwd-current" placeholder="••••••••" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label text-secondary small fw-semibold">New Password</label>
+                  <input type="password" class="form-control-df" id="pwd-new" placeholder="At least 6 characters" required>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label text-secondary small fw-semibold">Confirm New Password</label>
+                  <input type="password" class="form-control-df" id="pwd-confirm" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-outline-df w-100 py-2">
+                  <i class="bi bi-key me-1"></i> Update Password
+                </button>
+              </form>
+            </div>
+
+            <!-- Active Sessions -->
+            <div class="attendance-card">
+              <div class="attendance-card-header">
+                <h3 class="attendance-card-title"><i class="bi bi-laptop text-info me-2"></i>Active Login Sessions</h3>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="DayflowSettings.logoutOtherSessions()">
+                  <i class="bi bi-box-arrow-right me-1"></i> Log Out Other Sessions
+                </button>
+              </div>
+
+              <div class="d-flex flex-column gap-3">
+                <div class="d-flex align-items-center justify-content-between p-3 rounded" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-display fs-4 text-primary"></i>
+                    <div>
+                      <div class="fw-semibold text-white">Chrome on macOS (Current)</div>
+                      <div class="small text-muted">Bangalore, India • IP: 106.51.72.18</div>
+                    </div>
+                  </div>
+                  <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 rounded-pill small">
+                    Active Now
+                  </span>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between p-3 rounded" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04);">
+                  <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-phone fs-4 text-secondary"></i>
+                    <div>
+                      <div class="fw-semibold text-white">Dayflow Mobile on iPhone 15</div>
+                      <div class="small text-muted">Bangalore, India • Last active 4 hours ago</div>
+                    </div>
+                  </div>
+                  <span class="text-muted small">Mobile App</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script src="/js/settings.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      DayflowAuth.requireAuth(['employee', 'hr']);
+      DayflowAuth.renderGlobalLayout('emp-settings');
+      DayflowSettings.initEmployee();
+    });
+  </script>
+</body>
+</html>

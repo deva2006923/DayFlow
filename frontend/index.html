@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dayflow HRMS — Every workday, perfectly aligned.</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body class="bg-white">
+
+  <!-- Landing Navigation -->
+  <nav class="navbar navbar-expand-lg border-bottom py-3 bg-white sticky-top">
+    <div class="container">
+      <a class="dayflow-brand" href="/">
+        <div class="brand-icon">
+          <i class="bi bi-intersect"></i>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">DAYFLOW</span>
+          <span class="brand-subtitle">HR Management</span>
+        </div>
+      </a>
+      
+      <div class="d-flex align-items-center gap-2">
+        <a href="/pages/auth/login.html" class="btn btn-outline-df">Sign In</a>
+        <a href="/pages/auth/signup.html" class="btn btn-primary-df">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="py-5 bg-light border-bottom">
+    <div class="container py-4 text-center">
+      <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary-subtle text-primary fw-semibold small mb-3">
+        <i class="bi bi-stars"></i> Next-Generation Human Resource Management
+      </div>
+      <h1 class="display-5 fw-extrabold text-dark mb-3" style="letter-spacing: -0.03em;">
+        Every workday, <span class="text-primary">perfectly aligned.</span>
+      </h1>
+      <p class="lead text-muted mx-auto mb-4" style="max-width: 680px;">
+        Dayflow unifies employee workflows, attendance tracking, leave requests, and payroll transparency into a single, intuitive interface for modern teams.
+      </p>
+
+      <!-- Instant Role Launch Bar -->
+      <div class="p-3 bg-white rounded-4 shadow-sm border mx-auto mb-4" style="max-width: 620px;">
+        <div class="text-muted small fw-bold text-uppercase mb-2 text-start px-2">Instant Demo Portal Launcher:</div>
+        <div class="d-flex flex-column flex-sm-row gap-2">
+          <button class="btn btn-primary-df flex-fill py-2" onclick="launchDemo('employee')">
+            <i class="bi bi-person-badge-fill me-1"></i> Launch Employee Portal
+          </button>
+          <button class="btn btn-outline-df flex-fill py-2" onclick="launchDemo('hr')">
+            <i class="bi bi-shield-lock-fill text-primary me-1"></i> Launch HR Admin Portal
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3 text-muted small">
+        <span><i class="bi bi-check2-circle text-success me-1"></i> Employee Portal</span>
+        <span><i class="bi bi-check2-circle text-success me-1"></i> HR Approvals</span>
+        <span><i class="bi bi-check2-circle text-success me-1"></i> Payroll Breakdown</span>
+        <span><i class="bi bi-check2-circle text-success me-1"></i> Django REST Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Feature Grid -->
+  <section class="py-5">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <h2 class="fw-bold text-dark">Built for Employees & People Teams</h2>
+        <p class="text-muted">Explore the end-to-end modules crafted with modern HR best practices.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="df-card h-100 p-4">
+            <div class="stat-icon primary mb-3"><i class="bi bi-clock-history"></i></div>
+            <h5 class="fw-bold text-dark mb-2">Live Workday Attendance</h5>
+            <p class="text-muted small mb-0">Real-time check-in and check-out tracking with daily working hour computations and monthly status calendar.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="df-card h-100 p-4">
+            <div class="stat-icon warning mb-3"><i class="bi bi-calendar2-range"></i></div>
+            <h5 class="fw-bold text-dark mb-2">Leave Management</h5>
+            <p class="text-muted small mb-0">Paid, sick, and unpaid leave tracking with date validation, instant requests, and mandatory HR feedback workflows.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="df-card h-100 p-4">
+            <div class="stat-icon success mb-3"><i class="bi bi-cash-stack"></i></div>
+            <h5 class="fw-bold text-dark mb-2">Payroll Transparency</h5>
+            <p class="text-muted small mb-0">Transparent salary breakdowns, earnings vs deductions charts, and official printable salary slip generation.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="df-card h-100 p-4">
+            <div class="stat-icon info mb-3"><i class="bi bi-people"></i></div>
+            <h5 class="fw-bold text-dark mb-2">Workforce Directory</h5>
+            <p class="text-muted small mb-0">Centralized employee roster with department filtering, instant search, profile editing, and lifecycle controls.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="df-card h-100 p-4">
+            <div class="stat-icon danger mb-3"><i class="bi bi-shield-check"></i></div>
+            <h5 class="fw-bold text-dark mb-2">HR Leave Approvals</h5>
+            <p class="text-muted small mb-0">Pending request triage for managers with one-click approval or detailed mandatory justification on decline.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="df-card h-100 p-4">
+            <div class="stat-icon primary mb-3"><i class="bi bi-bar-chart-line"></i></div>
+            <h5 class="fw-bold text-dark mb-2">Reports & Analytics</h5>
+            <p class="text-muted small mb-0">Workforce attendance distributions, leave trend analytics, and monthly department payroll statistics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-4 border-top bg-light">
+    <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2">
+        <div class="brand-icon" style="width: 28px; height: 28px; font-size: 0.9rem;">
+          <i class="bi bi-intersect"></i>
+        </div>
+        <span class="fw-bold text-dark">DAYFLOW</span>
+        <span class="text-muted small">— Human Resource Management System</span>
+      </div>
+      <div class="text-muted small">
+        Tagline: "Every workday, perfectly aligned."
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    async function launchDemo(role) {
+      if (role === 'employee') {
+        await DayflowAPI.login("employee@dayflow.com", "Employee@123");
+        window.location.href = '/pages/employee/dashboard.html';
+      } else {
+        await DayflowAPI.login("admin@dayflow.com", "Admin@123");
+        window.location.href = '/pages/admin/dashboard.html';
+      }
+    }
+  </script>
+</body>
+</html>

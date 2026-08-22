@@ -1,0 +1,655 @@
+/* ==========================================================================
+   DAYFLOW HRMS — Dashboard Stylesheet
+   Pixel-Perfect Implementation of Employee Dashboard Reference UI
+   ========================================================================== */
+
+/* ==========================================================================
+   1. TOP ACTIONS (APPLY LEAVE & SALARY SLIP)
+   ========================================================================== */
+
+.btn-top-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+/* 1. Apply Leave / Action: Frosted Glass / Clean Card */
+.btn-top-glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-xs);
+}
+
+.btn-top-glass:hover {
+  background: var(--surface-soft);
+  border-color: var(--border-hover);
+  color: var(--accent-orange);
+  transform: translateY(-1px);
+}
+
+/* 2. View Salary Slip: Vibrant Orange-to-Pink Gloss Gradient */
+.btn-top-gradient {
+  background: linear-gradient(90deg, #FF6B00 0%, #FF2E7E 100%);
+  border: none;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(255, 46, 126, 0.35);
+}
+
+.btn-top-gradient:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 20px rgba(255, 46, 126, 0.5);
+  color: #FFFFFF !important;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   2. KPI STATS CARDS & CIRCULAR BADGES
+   ========================================================================== */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.35rem 1.4rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.stat-value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.15;
+}
+
+.stat-value.text-success {
+  color: #10B981 !important;
+}
+
+.stat-unit {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+.stat-subtext {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+.stat-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.stat-trend.positive {
+  color: #059669;
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+}
+
+[data-theme="dark"] .stat-trend.positive {
+  color: #34D399;
+}
+
+.stat-trend.positive-text {
+  color: #10B981;
+  background: transparent;
+  padding: 0;
+}
+
+/* Stat Circular Icon Badges */
+.stat-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.stat-icon-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10B981;
+}
+
+.stat-icon-purple {
+  background: rgba(139, 92, 246, 0.15);
+  color: #8B5CF6;
+}
+
+.stat-icon-amber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #D97706;
+}
+
+.stat-icon-blue {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3B82F6;
+}
+
+.stat-icon-pink {
+  background: rgba(255, 61, 129, 0.15);
+  color: #FF3D81;
+}
+
+.stat-icon-orange {
+  background: rgba(255, 138, 0, 0.15);
+  color: #FF8A00;
+}
+
+/* ==========================================================================
+   3. SHIFT PUNCH TIMELINE WIDGET
+   ========================================================================== */
+
+.shift-timeline-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.step-bullet {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.step-bullet.bullet-purple {
+  border: 2px solid #8B5CF6;
+  background: rgba(139, 92, 246, 0.12);
+  color: #8B5CF6;
+}
+
+.step-bullet.bullet-green {
+  border: 2px solid #10B981;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+}
+
+.step-bullet.bullet-orange {
+  border: 2px solid #FF8A00;
+  background: rgba(255, 138, 0, 0.12);
+  color: #FF8A00;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-time {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.2;
+}
+
+.step-sub {
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.step-status {
+  font-size: 0.825rem;
+  font-weight: 600;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timeline-line {
+  width: 2px;
+  height: 28px;
+  background: var(--border);
+  margin-left: 15px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.timeline-actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-timeline-action {
+  flex: 1;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-timeline-action:hover:not(:disabled) {
+  background: var(--surface-soft);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.btn-timeline-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   4. CARDS, HEADERS & BADGES
+   ========================================================================== */
+
+.df-card {
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.df-card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title-df {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.01em;
+}
+
+.badge-tag-df {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 3px 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.link-details-df {
+  color: #2563EB;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
+[data-theme="dark"] .link-details-df {
+  color: #38BDF8;
+}
+
+.link-details-df:hover {
+  color: #1D4ED8;
+}
+
+/* ==========================================================================
+   5. LEAVE BALANCE SUMMARY (DOUGHNUT + LEGEND)
+   ========================================================================== */
+
+.leave-custom-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.legend-item-df {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.legend-box.box-purple { background-color: #8B5CF6; }
+.legend-box.box-orange { background-color: #FF8A00; }
+.legend-box.box-pink { background-color: #FF3D81; }
+
+.legend-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   6. RECENT ACTIVITY TIMELINE LIST
+   ========================================================================== */
+
+.activity-timeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activity-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.95rem 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+  transition: background-color 0.15s ease;
+}
+
+.activity-row-item:last-child {
+  border-bottom: none;
+}
+
+.activity-row-item:hover {
+  background-color: var(--card-hover);
+}
+
+.activity-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.activity-circle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.activity-circle-icon.circle-green {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #10B981;
+}
+
+.activity-circle-icon.circle-blue {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #3B82F6;
+}
+
+.activity-circle-icon.circle-purple {
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  color: #8B5CF6;
+}
+
+.activity-circle-icon.circle-amber {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #F59E0B;
+}
+
+.activity-title-text {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.25;
+}
+
+.activity-desc-text {
+  font-size: 0.775rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.activity-time-text {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   7. HR ADMIN QUICK ACTIONS GRID & CARDS
+   ========================================================================== */
+
+.admin-quick-actions-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 1.75rem;
+}
+
+.quick-actions-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 1199.98px) {
+  .admin-quick-actions-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  .admin-quick-actions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quick-action-card,
+.quick-action-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  min-height: 105px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.quick-action-card:hover,
+.quick-action-btn:hover {
+  background: var(--card-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.quick-action-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.quick-action-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.quick-action-card:hover .quick-action-icon-box,
+.quick-action-btn:hover .quick-action-icon-box {
+  transform: scale(1.08);
+}
+
+.icon-box-blue {
+  background: rgba(59, 130, 246, 0.12);
+  color: #2563EB;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.icon-box-orange {
+  background: rgba(255, 138, 0, 0.12);
+  color: #FF8A00;
+  border: 1px solid rgba(255, 138, 0, 0.25);
+}
+
+.icon-box-green {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.icon-box-pink {
+  background: rgba(255, 61, 129, 0.12);
+  color: #FF3D81;
+  border: 1px solid rgba(255, 61, 129, 0.25);
+}
+
+.icon-box-purple {
+  background: rgba(139, 92, 246, 0.12);
+  color: #7C3AED;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+[data-theme="dark"] .icon-box-blue { color: #60A5FA; }
+[data-theme="dark"] .icon-box-green { color: #10B981; }
+[data-theme="dark"] .icon-box-purple { color: #A78BFA; }
+
+.quick-action-arrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.quick-action-card:hover .quick-action-arrow,
+.quick-action-btn:hover .quick-action-arrow {
+  color: var(--accent-orange);
+  transform: translateX(2px);
+}
+
+.quick-action-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 2px;
+  line-height: 1.25;
+}
+
+.quick-action-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+

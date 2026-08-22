@@ -1,0 +1,356 @@
+/* ==========================================================================
+   DAYFLOW HRMS — Centralized Design System & Color Palette
+   Directly mapped to the 2026 SaaS Dashboard Reference (Orange, Pink, Purple, Dark Glass)
+   ========================================================================== */
+
+:root {
+  /* ==========================================================================
+     1. PRIMARY DARK THEME TOKENS (Default Reference)
+     ========================================================================== */
+  
+  /* Canvas Backgrounds & Wallpaper */
+  --bg-image: url('/assets/background.jpg');
+  --bg-primary: #05070B;
+  --bg-secondary: #090D14;
+  --bg-tertiary: #0D121B;
+  --background: #05070B;
+  --background-secondary: #090D14;
+  --background-soft: #0D121B;
+
+  /* Card Surfaces & Glassmorphism */
+  --surface: rgba(16, 23, 34, 0.82);
+  --surface-primary: rgba(16, 23, 34, 0.82);
+  --surface-secondary: rgba(20, 27, 39, 0.86);
+  --surface-soft: rgba(24, 34, 49, 0.88);
+  --surface-subtle: rgba(13, 19, 29, 0.78);
+  --card-bg: rgba(16, 23, 34, 0.82);
+  --card-hover: rgba(24, 34, 49, 0.92);
+  --sidebar-bg: rgba(8, 12, 18, 0.86);
+  --topbar-bg: rgba(8, 12, 18, 0.82);
+
+  /* Primary Accent Gradients */
+  --gradient-primary: linear-gradient(135deg, #FF8A00 0%, #FF3D81 100%);
+  --gradient-purple: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 100%);
+  --gradient-cyan: linear-gradient(135deg, #06B6D4 0%, #10B981 100%);
+  --gradient-orange: linear-gradient(135deg, #FF8A00 0%, #FFA940 100%);
+  --gradient-pink: linear-gradient(135deg, #FF3D81 0%, #FF75A0 100%);
+  --gradient-card: linear-gradient(145deg, #101722 0%, #141B27 100%);
+  --gradient-hero: linear-gradient(135deg, #101722 0%, #171F2D 100%);
+
+  /* Solid Accent Colors */
+  --accent-orange: #FF8A00;
+  --accent-pink: #FF3D81;
+  --accent-purple: #8B5CF6;
+  --accent-blue: #3B82F6;
+  --accent-cyan: #06B6D4;
+  --accent-green: #10B981;
+  --accent-amber: #FBBF24;
+
+  /* Primary Brand Aliases */
+  --primary: #FF8A00;
+  --primary-hover: #FF7500;
+  --primary-dark: #E67700;
+  --primary-light: #FFA940;
+  --primary-soft: rgba(255, 138, 0, 0.15);
+  --primary-subtle: rgba(255, 138, 0, 0.08);
+
+  --secondary: #8B5CF6;
+  --secondary-hover: #7C3AED;
+  --secondary-dark: #6D28D9;
+  --secondary-light: #A78BFA;
+  --secondary-soft: rgba(139, 92, 246, 0.15);
+
+  --accent: #FF3D81;
+  --accent-hover: #F43F5E;
+  --accent-dark: #E11D48;
+  --accent-light: #FB7185;
+  --accent-soft: rgba(255, 61, 129, 0.15);
+
+  /* Typography Colors */
+  --text-primary: #F8FAFC;
+  --text-main: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-light: #64748B;
+  --text-heading: #FFFFFF;
+
+  /* Borders & Dividers */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-focus: #8B5CF6;
+
+  /* Status Badges & Semantic Colors */
+  --success: #10B981;
+  --success-hover: #059669;
+  --success-dark: #047857;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --success-text: #34D399;
+  --success-border: rgba(16, 185, 129, 0.3);
+
+  --warning: #F59E0B;
+  --warning-hover: #D97706;
+  --warning-dark: #B45309;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-text: #FBBF24;
+  --warning-border: rgba(245, 158, 11, 0.3);
+
+  --danger: #FF3D81;
+  --danger-hover: #F43F5E;
+  --danger-dark: #E11D48;
+  --danger-bg: rgba(255, 61, 129, 0.12);
+  --danger-text: #FB7185;
+  --danger-border: rgba(255, 61, 129, 0.3);
+
+  --info: #3B82F6;
+  --info-hover: #2563EB;
+  --info-dark: #1D4ED8;
+  --info-bg: rgba(59, 130, 246, 0.12);
+  --info-text: #60A5FA;
+  --info-border: rgba(59, 130, 246, 0.3);
+
+  /* Layout Dimensions */
+  --sidebar-width: 256px;
+  --sidebar-collapsed-width: 76px;
+  --topbar-height: 70px;
+
+  /* Border Radii */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Depth, Shadows & Neon Glows */
+  --shadow-xs: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 25px 80px rgba(0, 0, 0, 0.6);
+  --shadow-glow-primary: 0 4px 20px rgba(255, 61, 129, 0.35);
+  --shadow-glow-orange: 0 4px 20px rgba(255, 138, 0, 0.35);
+  --shadow-glow-purple: 0 4px 20px rgba(139, 92, 246, 0.35);
+  --shadow-glow-green: 0 4px 20px rgba(16, 185, 129, 0.35);
+
+  /* Typography */
+  --font-sans: 'Poppins', 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Poppins', var(--font-sans);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   2. LIGHT THEME PALETTE (When toggled via data-theme="light")
+   ========================================================================== */
+[data-theme="light"],
+html[data-theme="light"],
+body.light-mode,
+body.light-theme,
+.light-mode {
+  --bg-primary: #F5F7FB;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #EEF2F6;
+  --background: #F5F7FB;
+  --background-secondary: #FFFFFF;
+  --background-soft: #F8FAFC;
+
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-primary: rgba(255, 255, 255, 0.88);
+  --surface-secondary: rgba(248, 250, 252, 0.92);
+  --surface-soft: rgba(241, 245, 249, 0.92);
+  --surface-subtle: rgba(248, 250, 252, 0.84);
+  --surface-elevated: rgba(255, 255, 255, 0.94);
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-hover: rgba(241, 245, 249, 0.96);
+  --sidebar-bg: rgba(255, 255, 255, 0.90);
+  --topbar-bg: rgba(255, 255, 255, 0.88);
+
+  --text-primary: #0F172A;
+  --text-main: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+  --text-heading: #0F172A;
+
+  --border: #E2E8F0;
+  --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
+  --border-light: #EEF2F6;
+  --border-subtle: #F1F5F9;
+  --border-focus: #FF8A00;
+
+  --chart-grid: #E2E8F0;
+  --chart-text: #64748B;
+
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --success-text: #059669;
+  --success-border: rgba(16, 185, 129, 0.28);
+
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --warning-text: #D97706;
+  --warning-border: rgba(245, 158, 11, 0.28);
+
+  --danger-bg: rgba(255, 61, 129, 0.10);
+  --danger-text: #E11D48;
+  --danger-border: rgba(255, 61, 129, 0.24);
+
+  --info-bg: rgba(59, 130, 246, 0.12);
+  --info-text: #2563EB;
+  --info-border: rgba(59, 130, 246, 0.28);
+
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 18px rgba(15, 23, 42, 0.07);
+  --shadow-lg: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-xl: 0 20px 45px rgba(15, 23, 42, 0.10);
+  --shadow-glow-primary: 0 4px 16px rgba(255, 61, 129, 0.25);
+}
+
+/* ==========================================================================
+   3. THEME TOGGLE SWITCH COMPONENT
+   ========================================================================== */
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  user-select: none;
+  transition: transform var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-1px);
+}
+
+.theme-toggle-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.theme-toggle-btn:focus-visible .theme-toggle-track {
+  box-shadow: 0 0 0 3px rgba(255, 138, 0, 0.35);
+}
+
+/* Track container */
+.theme-toggle-track {
+  width: 62px;
+  height: 32px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Light mode track override */
+[data-theme="light"] .theme-toggle-track,
+.light-mode .theme-toggle-track {
+  background: #EEF2F6;
+  border-color: #CBD5E1;
+  box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.06);
+}
+
+/* Sun & Moon Icons inside track */
+.theme-toggle-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.825rem;
+  z-index: 2;
+  transition: color var(--transition-normal), transform var(--transition-normal), opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+.theme-toggle-icon.icon-sun {
+  color: #94A3B8;
+  opacity: 0.7;
+}
+
+.theme-toggle-icon.icon-moon {
+  color: #A78BFA;
+  opacity: 0.9;
+}
+
+/* Light theme icon states */
+[data-theme="light"] .theme-toggle-icon.icon-sun,
+.light-mode .theme-toggle-icon.icon-sun {
+  color: #FF8A00;
+  opacity: 1;
+}
+
+[data-theme="light"] .theme-toggle-icon.icon-moon,
+.light-mode .theme-toggle-icon.icon-moon {
+  color: #94A3B8;
+  opacity: 0.6;
+}
+
+/* Sliding Glowing Thumb */
+.theme-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.55);
+  transform: translateX(30px);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background var(--transition-normal), box-shadow var(--transition-normal);
+  z-index: 1;
+}
+
+/* When light mode is active: move thumb to left */
+[data-theme="light"] .theme-toggle-thumb,
+.light-mode .theme-toggle-thumb,
+.theme-toggle-btn.is-light .theme-toggle-thumb {
+  transform: translateX(0px);
+  background: linear-gradient(135deg, #FF8A00 0%, #FF3D81 100%);
+  box-shadow: 0 2px 10px rgba(255, 138, 0, 0.5);
+}
+
+/* Global Smooth Transitions for Theme Shifts */
+body,
+.app-sidebar,
+.app-topbar,
+.df-card,
+.card,
+.stat-card,
+.quick-action-card,
+.quick-action-btn,
+.attendance-card,
+.shift-timeline-card,
+.attendance-kpi-card,
+.leave-balance-card,
+.approval-card,
+.info-item,
+.form-control,
+.form-control-df,
+.form-select,
+.form-select-df,
+.btn-top-glass,
+.btn-demo-trigger,
+.auth-card-container,
+.auth-brand-panel,
+.notif-dropdown-menu,
+.dropdown-menu,
+.table-responsive,
+.table,
+.table-df,
+.salary-slip-box {
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Email — Dayflow HRMS</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body class="bg-light">
+
+  <div class="min-vh-100 d-flex align-items-center justify-content-center p-3">
+    <div class="df-card p-4 p-md-5 text-center shadow-lg" style="max-width: 480px; width: 100%;">
+      
+      <div class="mx-auto mb-3 brand-icon" style="width: 54px; height: 54px; font-size: 1.75rem;">
+        <i class="bi bi-envelope-check-fill"></i>
+      </div>
+
+      <h2 class="fw-bold text-dark mb-1">Verify your email</h2>
+      <p class="text-muted small mb-3">
+        We sent a 6-digit verification code to <br>
+        <strong id="display-email" class="text-dark">anand@dayflow.com</strong>
+      </p>
+
+      <div class="alert alert-info py-2 small mb-3">
+        <i class="bi bi-info-circle me-1"></i> Demo verification code: <strong>123456</strong>
+      </div>
+
+      <form id="verifyForm" onsubmit="handleVerify(event)">
+        <div class="digit-inputs-group">
+          <input type="text" maxlength="1" class="digit-input" autofocus oninput="moveNext(this, 1)" id="d1" value="1">
+          <input type="text" maxlength="1" class="digit-input" oninput="moveNext(this, 2)" id="d2" value="2">
+          <input type="text" maxlength="1" class="digit-input" oninput="moveNext(this, 3)" id="d3" value="3">
+          <input type="text" maxlength="1" class="digit-input" oninput="moveNext(this, 4)" id="d4" value="4">
+          <input type="text" maxlength="1" class="digit-input" oninput="moveNext(this, 5)" id="d5" value="5">
+          <input type="text" maxlength="1" class="digit-input" oninput="moveNext(this, 6)" id="d6" value="6">
+        </div>
+
+        <button type="submit" class="btn btn-primary-df w-100 py-2 mb-3" id="btn-verify">
+          <span>Verify & Continue</span>
+        </button>
+      </form>
+
+      <div class="d-flex justify-content-between align-items-center small text-muted">
+        <span>Didn't receive code?</span>
+        <button type="button" class="btn btn-link p-0 text-primary fw-semibold small text-decoration-none" onclick="resendCode()">Resend Code</button>
+      </div>
+
+      <div class="mt-4 pt-3 border-top">
+        <a href="/pages/auth/login.html" class="small text-muted text-decoration-none">
+          <i class="bi bi-arrow-left me-1"></i> Return to Sign In
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/notifications.js"></script>
+  <script>
+    // Read email from URL query if present
+    const params = new URLSearchParams(window.location.search);
+    const emailParam = params.get('email');
+    if (emailParam) {
+      document.getElementById('display-email').textContent = emailParam;
+    }
+
+    function moveNext(curr, index) {
+      if (curr.value.length === 1 && index < 6) {
+        document.getElementById(`d${index + 1}`).focus();
+      }
+    }
+
+    async function handleVerify(e) {
+      e.preventDefault();
+      const code = [1,2,3,4,5,6].map(i => document.getElementById(`d${i}`).value).join('');
+      const btn = document.getElementById('btn-verify');
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Verifying...';
+
+      try {
+        const res = await DayflowAPI.verifyEmailCode(code);
+        if (res.success) {
+          showToast('Email verified successfully! Please sign in.', 'success');
+          setTimeout(() => {
+            window.location.href = '/pages/auth/login.html';
+          }, 800);
+        } else {
+          showToast(res.message, 'error');
+          btn.disabled = false;
+          btn.innerHTML = 'Verify & Continue';
+        }
+      } catch (err) {
+        showToast('Verification failed. Please try 123456.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = 'Verify & Continue';
+      }
+    }
+
+    function resendCode() {
+      showToast('New 6-digit verification code sent to your email!', 'info');
+    }
+  </script>
+</body>
+</html>
