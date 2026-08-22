@@ -334,56 +334,41 @@ const DayflowDashboard = {
     const adminListEl = document.getElementById('admin-activity-timeline');
 
     if (listEl) {
-      // Employee Dashboard Timeline items matching reference UI:
-      const items = [
-        {
-          iconClass: 'circle-green',
-          icon: 'bi-check-lg',
-          title: 'Check-out completed',
-          desc: 'Punched out at 12:20 PM',
-          time: 'Just now'
-        },
-        {
-          iconClass: 'circle-blue',
-          icon: 'bi-person-fill',
-          title: 'Check-in completed',
-          desc: 'Punched in at 11:15 AM for workday',
-          time: 'Just now'
-        },
-        {
-          iconClass: 'circle-purple',
-          icon: 'bi-wifi',
-          title: 'Check-in completed',
-          desc: 'Punched in for workday from Office Wi-Fi',
-          time: 'Today, 09:02 AM'
-        },
-        {
-          iconClass: 'circle-amber',
-          icon: 'bi-calendar-heart',
-          title: 'Leave request approved',
-          desc: 'Paid leave approved by People Operations',
-          time: 'Yesterday, 06:15 PM'
-        }
-      ];
+      // Real activity log (populated by addActivity() calls after actual
+      // check-in/check-out/leave actions) — no fabricated timestamps.
+      const activities = await DayflowAPI.getActivities();
 
-      let html = '';
-      items.forEach(item => {
-        html += `
-          <li class="activity-row-item">
-            <div class="activity-left">
-              <div class="activity-circle-icon ${item.iconClass}">
-                <i class="bi ${item.icon}"></i>
+      if (activities.length === 0) {
+        listEl.innerHTML = '<li class="text-muted small py-4 text-center">No recent activity yet. Punch in to get started.</li>';
+      } else {
+        const iconConfig = {
+          checkin: { icon: 'bi-box-arrow-in-right', circleClass: 'circle-blue' },
+          leave: { icon: 'bi-calendar2-heart', circleClass: 'circle-amber' },
+          payroll: { icon: 'bi-cash-coin', circleClass: 'circle-green' },
+          profile: { icon: 'bi-person-check', circleClass: 'circle-purple' },
+          update: { icon: 'bi-gear', circleClass: 'circle-blue' }
+        };
+
+        let html = '';
+        activities.slice(0, 5).forEach(item => {
+          const conf = iconConfig[item.type] || { icon: 'bi-activity', circleClass: 'circle-blue' };
+          html += `
+            <li class="activity-row-item">
+              <div class="activity-left">
+                <div class="activity-circle-icon ${conf.circleClass}">
+                  <i class="bi ${conf.icon}"></i>
+                </div>
+                <div>
+                  <div class="activity-title-text">${item.title}</div>
+                  <div class="activity-desc-text">${item.desc}</div>
+                </div>
               </div>
-              <div>
-                <div class="activity-title-text">${item.title}</div>
-                <div class="activity-desc-text">${item.desc}</div>
-              </div>
-            </div>
-            <div class="activity-time-text">${item.time}</div>
-          </li>
-        `;
-      });
-      listEl.innerHTML = html;
+              <div class="activity-time-text">${item.time}</div>
+            </li>
+          `;
+        });
+        listEl.innerHTML = html;
+      }
     }
 
     if (adminListEl) {

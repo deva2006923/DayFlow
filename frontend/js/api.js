@@ -80,8 +80,11 @@ function decorateUser(u) {
   };
 }
 
-function mapAttendanceRecord(r, employeesById = {}) {
-  const emp = employeesById[r.userId] || {};
+function mapAttendanceRecord(r, employeesById = {}, currentUser = null) {
+  // Prefer the employee-list lookup (admin view). If unavailable (employee view,
+  // where GET /api/users is admin-only), fall back to the authenticated user's
+  // own stored profile when the record belongs to them.
+  const emp = employeesById[r.userId] || (currentUser && currentUser.id === r.userId ? currentUser : {});
   const fmtTime = (iso) => iso ? new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--:-- --";
   let hours = "0h 00m";
   if (r.checkInTime && r.checkOutTime) {
@@ -193,7 +196,7 @@ const DayflowAPI = {
 
   async getEmployee(id) {
     const me = getStoredUser();
-    if (me && me.id === id) {
+    if (!id || (me && me.id === id)) {
       const u = await apiRequest("/users/me");
       return decorateUser(u);
     }
@@ -251,18 +254,21 @@ const DayflowAPI = {
   // ==================== ATTENDANCE ====================
   async getAttendance(filters = {}) {
     const me = getStoredUser();
-    const employeesById = await this._employeesById();
     let records;
+    let employeesById = {};
     if (me && me.role === "hr") {
+      // Admins are authorized to decorate records with names/departments from the full employee list.
+      employeesById = await this._employeesById();
       const params = new URLSearchParams();
       if (filters.employeeId) params.set("userId", filters.employeeId);
       if (filters.date) params.set("date", filters.date);
       const qs = params.toString();
       records = await apiRequest(`/attendance${qs ? `?${qs}` : ""}`);
     } else {
+      // Employees only see their own records and must not call the admin-only /api/users.
       records = await apiRequest(`/attendance/me?range=weekly`);
     }
-    let mapped = records.map(r => mapAttendanceRecord(r, employeesById));
+    let mapped = records.map(r => mapAttendanceRecord(r, employeesById, me));
     if (filters.status && filters.status !== "All") {
       mapped = mapped.filter(r => r.status.toLowerCase() === filters.status.toLowerCase());
     }
@@ -270,17 +276,17 @@ const DayflowAPI = {
   },
 
   async checkIn(empId) {
+    // The punch is considered successful as soon as the attendance endpoint returns 200.
+    // No admin-only employee list lookup is needed to decorate the response.
     const record = await apiRequest("/attendance/checkin", { method: "POST" });
     this.addActivity("Check-in completed", "Punched in for workday", "checkin");
-    const employeesById = await this._employeesById();
-    return mapAttendanceRecord(record, employeesById);
+    return mapAttendanceRecord(record, {}, getStoredUser());
   },
 
   async checkOut(empId) {
     const record = await apiRequest("/attendance/checkout", { method: "POST" });
     this.addActivity("Check-out completed", "Punched out for the day", "checkin");
-    const employeesById = await this._employeesById();
-    return mapAttendanceRecord(record, employeesById);
+    return mapAttendanceRecord(record, {}, getStoredUser());
   },
 
   // ==================== LEAVE MANAGEMENT ====================

@@ -5,15 +5,40 @@
 const DayflowProfile = {
   async init() {
     const user = DayflowAuth.getCurrentUser();
-    const empId = user ? user.id : 'EMP001';
+    const empId = user ? user.id : null;
     await this.loadProfileData(empId);
   },
 
   async loadProfileData(empId) {
-    const emp = await DayflowAPI.getEmployee(empId);
-    const payroll = await DayflowAPI.getPayroll(empId);
+    // Always resolve the authenticated user from /api/users/me — never fall
+    // back to a hardcoded/demo employee for a logged-in session.
+    let emp;
+    try {
+      emp = await DayflowAPI.getEmployee(empId);
+    } catch (e) {
+      console.error('[profile] Failed to load authenticated user:', e);
+      showToast('Unable to load your profile. Please try again.', 'error');
+      return;
+    }
     if (!emp) return;
 
+    this.renderProfile(emp);
+
+    // Payroll is fetched separately so a missing payroll record (404) never
+    // blocks the profile itself from rendering.
+    try {
+      const payroll = await DayflowAPI.getPayroll(empId);
+      this.renderPayroll(payroll);
+    } catch (e) {
+      console.error('[profile] Failed to load payroll:', e);
+      this.renderPayroll(null);
+    }
+
+    // Documents + edit-modal prefill also depend only on emp, not payroll.
+    this.renderDocuments(emp);
+  },
+
+  renderProfile(emp) {
     // Header Info
     const avatarEl = document.getElementById('prof-avatar');
     const nameEl = document.getElementById('prof-name');
@@ -24,7 +49,8 @@ const DayflowProfile = {
     if (avatarEl) avatarEl.textContent = emp.avatar || 'DF';
     if (nameEl) nameEl.textContent = emp.name;
     if (roleEl) roleEl.textContent = emp.designation;
-    if (idEl) idEl.textContent = emp.id;
+    // Show the HR-facing employeeId (e.g. "EMP004"), not the internal MongoDB id.
+    if (idEl) idEl.textContent = emp.employeeId || emp.id;
     if (deptEl) deptEl.textContent = emp.department;
 
     // Personal Details
@@ -34,21 +60,35 @@ const DayflowProfile = {
     this.setText('p-address', emp.address);
 
     // Job Details
-    this.setText('j-empid', emp.id);
+    this.setText('j-empid', emp.employeeId || emp.id);
     this.setText('j-dept', emp.department);
     this.setText('j-desig', emp.designation);
     this.setText('j-joining', emp.joiningDate);
     this.setText('j-status', emp.status);
 
-    // Salary Details
+    // Pre-populate edit modal
+    const editPhone = document.getElementById('edit-profile-phone');
+    const editAddress = document.getElementById('edit-profile-address');
+    if (editPhone) editPhone.value = emp.phone || '';
+    if (editAddress) editAddress.value = emp.address || '';
+  },
+
+  renderPayroll(payroll) {
     if (payroll) {
       this.setText('s-basic', `₹${payroll.basicSalary.toLocaleString()}`);
       this.setText('s-allowances', `₹${(payroll.hra + payroll.specialAllowance + payroll.conveyance).toLocaleString()}`);
       this.setText('s-deductions', `₹${payroll.totalDeductions.toLocaleString()}`);
       this.setText('s-net', `₹${payroll.netSalary.toLocaleString()}`);
+    } else {
+      // Safe empty state instead of leaving stale/hardcoded placeholder values.
+      this.setText('s-basic', 'Payroll information unavailable');
+      this.setText('s-allowances', '-');
+      this.setText('s-deductions', '-');
+      this.setText('s-net', '-');
     }
+  },
 
-    // Documents
+  renderDocuments(emp) {
     const docsContainer = document.getElementById('documents-container');
     if (docsContainer && emp.documents) {
       let docHtml = '';
@@ -72,12 +112,6 @@ const DayflowProfile = {
       });
       docsContainer.innerHTML = docHtml;
     }
-
-    // Pre-populate edit modal
-    const editPhone = document.getElementById('edit-profile-phone');
-    const editAddress = document.getElementById('edit-profile-address');
-    if (editPhone) editPhone.value = emp.phone || '';
-    if (editAddress) editAddress.value = emp.address || '';
   },
 
   setText(id, text) {

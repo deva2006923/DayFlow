@@ -8,11 +8,24 @@ const DayflowAttendance = {
 
   async init(isAdmin = false) {
     this.isAdmin = isAdmin;
-    await this.renderSummaryCards();
+
+    // The calendar and summary cards are independent widgets. A failure in one
+    // (e.g. summary cards) must not prevent the other from rendering.
     if (!isAdmin) {
       this.renderCalendar();
     }
-    await this.renderAttendanceTable();
+
+    try {
+      await this.renderSummaryCards();
+    } catch (e) {
+      console.error('[attendance] Failed to load summary cards:', e);
+    }
+
+    try {
+      await this.renderAttendanceTable();
+    } catch (e) {
+      console.error('[attendance] Failed to load attendance table:', e);
+    }
   },
 
   async renderSummaryCards() {
