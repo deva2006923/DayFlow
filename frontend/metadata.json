@@ -1,0 +1,7 @@
+{
+  "name": "Dayflow - HRMS",
+  "description": "A modern, production-quality Human Resource Management System for Employees and HR Officers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
