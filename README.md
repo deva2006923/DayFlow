@@ -55,30 +55,6 @@ The project is split into two independently runnable pieces that talk to each ot
 
 ---
 
-## 🖼️ Screenshots
-
-<div align="center">
-
-**🔐 Login — Light & Dark Mode**
-
-<img src="https://raw.githubusercontent.com/deva2006923/DayFlow/refs/heads/main/frontend/images/loginpage1.png" width="49%"/> <img src="https://raw.githubusercontent.com/deva2006923/DayFlow/refs/heads/main/frontend/images/loginpage2.png" width="49%"/>
-
-<br/><br/>
-
-**🧑‍💻 Employee Reports & Analytics**
-
-<img src="https://raw.githubusercontent.com/deva2006923/DayFlow/refs/heads/main/frontend/images/employeepage.png" width="90%"/>
-
-<br/><br/>
-
-**🛠️ HR Admin Dashboard**
-
-<img src="https://raw.githubusercontent.com/deva2006923/DayFlow/refs/heads/main/frontend/images/Hrpage.png" width="90%"/>
-
-</div>
-
----
-
 ## ✨ Key Features
 
 <table>
