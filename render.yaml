@@ -14,15 +14,14 @@ services:
       - key: JWT_EXPIRY_HOURS
         value: "24"
 
-  # Frontend - Vite/React static site
+  # Frontend - static HTML/CSS/JS site (frontend/index.html, /pages, /css, /js).
+  # frontend/src, package.json, and vite.config.ts are an unused React scaffold
+  # left over from an earlier prototype — do NOT build/deploy those; the real
+  # UI is the plain static tree served directly with no build step.
   - type: web
     name: dayflow-frontend
     runtime: static
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/dist
-    envVars:
-      - key: APP_URL
-        sync: false
+    staticPublishPath: frontend
     routes:
       - type: rewrite
         source: /*

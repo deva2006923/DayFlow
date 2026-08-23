@@ -8,6 +8,7 @@ import bcrypt
 from datetime import datetime
 from bson import ObjectId
 from bson.errors import InvalidId
+from pymongo.errors import DuplicateKeyError
 from flask import Blueprint, request, jsonify
 
 from db import users_col
@@ -65,7 +66,13 @@ def signup():
         "verified": True,  # auto-verified, no email service for hackathon scope
     }
 
-    result = users_col.insert_one(user_doc)
+    try:
+        result = users_col.insert_one(user_doc)
+    except DuplicateKeyError:
+        # Belt-and-suspenders: the pre-checks above prevent this in the common case,
+        # but a unique index catches the race if two signups land at the same instant.
+        return jsonify({"error": "Email or Employee ID already registered"}), 409
+
     user_doc["_id"] = result.inserted_id
 
     token = generate_token(result.inserted_id, data["role"])

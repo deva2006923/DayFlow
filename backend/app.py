@@ -15,6 +15,7 @@ from attendance import attendance_bp
 from leave import leave_bp
 from payroll import payroll_bp
 from analytics import analytics_bp
+from db import client as mongo_client
 
 app = Flask(__name__)
 CORS(app)
@@ -29,7 +30,14 @@ app.register_blueprint(analytics_bp)
 @app.route("/", methods=["GET"])
 @app.route("/api/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok", "service": "dayflow-backend"}), 200
+    # A real liveness check: confirms Flask AND the database connection both work,
+    # not just that the process is running.
+    try:
+        mongo_client.admin.command("ping")
+        db_status = "connected"
+    except Exception as e:
+        return jsonify({"status": "degraded", "service": "dayflow-backend", "database": "unreachable", "error": str(e)}), 503
+    return jsonify({"status": "ok", "service": "dayflow-backend", "database": db_status}), 200
 
 
 @app.errorhandler(404)

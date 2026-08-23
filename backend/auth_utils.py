@@ -13,6 +13,13 @@ from flask import request, jsonify
 JWT_SECRET = os.getenv("JWT_SECRET", "dev_secret_change_me")
 JWT_EXPIRY_HOURS = int(os.getenv("JWT_EXPIRY_HOURS", "24"))
 
+if JWT_SECRET == "dev_secret_change_me":
+    print(
+        "[auth_utils] WARNING: JWT_SECRET is not set — using an insecure default. "
+        "Tokens signed with this secret are forgeable. Set JWT_SECRET in your "
+        "environment before deploying anywhere real users can reach this server."
+    )
+
 
 def generate_token(user_id, role):
     payload = {
